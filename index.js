@@ -12,8 +12,8 @@ const {PORT, CLIENT_ORIGIN} = require('./config');
 const localStrategy = require('./passport/local');
 const jwtStrategy = require('./passport/jwt');
 
-const usersRouter = require('/routes/users');
-const authRouter = require('./router/auth');
+const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
@@ -21,6 +21,9 @@ passport.use(jwtStrategy);
 const {dbConnect} = require('./db-mongoose');
 
 const app = express();
+
+// Utilize the Express `.json()` body parser
+app.use(express.json());
 
 app.use(morgan(
   process.env.NODE_ENV === 'production'
