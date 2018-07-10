@@ -2,9 +2,18 @@
 const mongoose = require('mongoose');
 
 const QuestionSchema = new mongoose.Schema({
-	category: {type: String, required: true},
-	prompt: {type: String, required: true},
-	answer: {type: String, required: true}
+	category: {
+		type: String,
+		required: true
+	},
+	prompt: {
+		type: String,
+		required: true
+	},
+	answer: {
+		type: String,
+		required: true
+	},
 });
 
 

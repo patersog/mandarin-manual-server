@@ -2,13 +2,56 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-	firstname: { type: String, default: ''},
-	lastname: { type: String, default: ''},
-	username: { type: String, required: true, unique: true },
-	password: { type: String, required: true },
-	lesson_plan: { type: Object }
+const nodeSchema = new mongoose.Schema({
+	_this: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Question'
+	},
+	next: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Question'
+	},
+	m : {
+		type: Number,
+		default: 1
+	}
 });
+
+const UserSchema = new mongoose.Schema({
+	firstname: {
+		type: String,
+		default: ''
+	},
+	lastname: {
+		type: String,
+		default: ''
+	},
+	username: {
+		type: String,
+		required: true,
+		unique: true
+	},
+	password: {
+		type: String,
+		required: true
+	},
+	questions: {
+		current: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Question'
+		},
+		list: {
+			type: [nodeSchema]
+		}
+	}
+});
+
+/**
+ *  [ C , D , B,  A ]
+ *
+ *  [ B -> C -> D -> A ]
+ *
+ */
 
 UserSchema.set('toObject', {
 	transform: function(doc, ret) {
