@@ -38,7 +38,8 @@ const UserSchema = new mongoose.Schema({
 	questions: {
 		current: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Question'
+			ref: 'Question',
+			default: null
 		},
 		list: {
 			type: [nodeSchema]
