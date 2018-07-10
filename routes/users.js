@@ -6,9 +6,8 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-
 // GET USER
-router.get('/users', (req, res, next) => {
+router.get('/', (req, res, next) => {
 	User.findOne()
 		.then(result => {
 			const {username} = result;
@@ -20,7 +19,7 @@ router.get('/users', (req, res, next) => {
 });
 
 // CREATE NEW USER
-router.post('/users', (req, res, next) => {
+router.post('/', (req, res, next) => {
 
 	const requiredFields = ['username', 'password'];
 	const missingField = requiredFields.find(field => !(field in req.body));
@@ -31,7 +30,7 @@ router.post('/users', (req, res, next) => {
 		return next(err);
 	}
 
-	const stringFields = ['username', 'password', 'fullname'];
+	const stringFields = ['username', 'password', 'firstname', 'lastname'];
 	const nonStringField = stringFields.find(
 		field => field in req.body && typeof req.body[field] !== 'string'
 	);
@@ -91,8 +90,9 @@ router.post('/users', (req, res, next) => {
 	}
 
 	// Username and password were validated as pre-trimmed
-	let { username, password, fullname = '' } = req.body;
-	fullname = fullname.trim();
+	let { username, password, firstname = '', lastname = '' } = req.body;
+	firstname = firstname.trim();
+	lastname = lastname.trim();
 
 	// Remove explicit hashPassword if using pre-save middleware
 	return User.hashPassword(password)
@@ -100,7 +100,8 @@ router.post('/users', (req, res, next) => {
 			const newUser = {
 				username,
 				password: digest,
-				fullname
+				firstname,
+				lastname
 			};
 			return User.create(newUser);
 		})

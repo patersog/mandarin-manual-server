@@ -11,8 +11,7 @@ const {PORT, CLIENT_ORIGIN} = require('./config');
 const localStrategy = require('./passport/local');
 const jwtStrategy = require('./passport/jwt');
 
-const usersRouter = require('./routes/users');
-const authRouter = require('./routes/auth');
+const appRouter = require('./routes');
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
@@ -33,8 +32,7 @@ app.use(morgan(
 
 app.use(cors({origin: CLIENT_ORIGIN}));
 
-app.use('/api', usersRouter);
-app.use('/api', authRouter);
+app.use('/api', appRouter);
 
 app.use(function (req, res, next) {
 	const err = new Error('Not Found');

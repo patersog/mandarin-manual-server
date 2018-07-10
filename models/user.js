@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-	fullname: { type: String, default: ''},
+	firstname: { type: String, default: ''},
+	lastname:{type: String, default: ''},
 	username: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	questions: { type: Object }
@@ -18,7 +19,8 @@ UserSchema.set('toObject', {
 	}
 });
 
-UserSchema.methods.validataPassword = function(password) {
+UserSchema.methods.validatePassword = function(password) {
+	console.log('TAG 3', 'is it valid?');
 	return bcrypt.compare(password, this.password);
 };
 
