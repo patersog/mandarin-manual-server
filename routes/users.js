@@ -62,6 +62,7 @@ router.post('/', (req, res, next) => {
 		field => 'min' in sizedFields[field] &&
       req.body[field].trim().length < sizedFields[field].min
 	);
+
 	if (tooSmallField) {
 		const min = sizedFields[tooSmallField].min;
 		const err = new Error(`Field: '${tooSmallField}' must be at least ${min} characters long`);
@@ -86,6 +87,7 @@ router.post('/', (req, res, next) => {
 	lastname = lastname.trim();
 
 	let user_id;
+
 	return User.hashPassword(password)
 		.then(digest => {
 			const newUser = {
@@ -111,7 +113,7 @@ router.post('/', (req, res, next) => {
 			return User.findByIdAndUpdate({_id: user_id}, { 'questions.head' : nodelist[0].value, 'questions.list': nodelist}, { new: true });
 		})
 		.then(result => {
-			return res.status(201).location(`/api/users/${result.id}`).json(result);
+			return res.status(201).location(`/api/users/${result.id}`).json(result.username);
 		})
 		.catch(err => {
 			if (err.code === 11000) {
