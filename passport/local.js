@@ -15,11 +15,9 @@ const localStrategy = new LocalStrategy((username, password, done) => {
 					location: 'username'
 				});
 			}
-			console.log('made it here!');
 			return user.validatePassword(password);
 		})
 		.then(isValid => {
-			console.log('TAG 4', isValid);
 			if (!isValid) {
 				return Promise.reject({
 					reason: 'LoginError',

@@ -2,6 +2,7 @@
 const express = require('express');
 
 const Questions = require('../models/questions');
+const Users = require('../models/user');
 
 const router = express.Router();
 
@@ -20,7 +21,9 @@ router.get('/:id', (req, res, next) => {
 	const {id} = req.params;
 	Questions.findById(id)
 		.then(result => {
-			res.json(result);
+			console.log('INSIDE /api/questions/:id', result);
+			console.log('Prompt: ', result.prompt);
+			res.json(result.prompt);
 		})
 		.catch(err => {
 			next(err);

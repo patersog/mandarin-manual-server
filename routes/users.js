@@ -19,6 +19,14 @@ router.get('/', (req, res, next) => {
 		});
 });
 
+router.get('/:id', (req, res, next) => {
+	const {id} = req.params;
+	User.findById({_id: id})
+		.then(result => {
+			console.log(result);
+		});
+});
+
 // CREATE NEW USER
 router.post('/', (req, res, next) => {
 
@@ -113,7 +121,9 @@ router.post('/', (req, res, next) => {
 			return User.findByIdAndUpdate({_id: user_id}, { 'questions.head' : nodelist[0].value, 'questions.list': nodelist}, { new: true });
 		})
 		.then(result => {
-			return res.status(201).location(`/api/users/${result.id}`).json(result.username);
+			const {username, firstname, lastname} = result;
+			const {head} = result.questions;
+			return res.status(201).location(`/api/users/${result.id}`).json({username, firstname, lastname, qid: head});
 		})
 		.catch(err => {
 			if (err.code === 11000) {
