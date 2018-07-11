@@ -1,4 +1,4 @@
-# Thinkful Backend Template
+# Thinkful Backend Template.
 
 A template for developing and deploying Node.js apps.
 
@@ -43,4 +43,3 @@ Requires the [Heroku CLI client](https://devcenter.heroku.com/articles/heroku-co
 ### Deploying to Heroku
 
 * Push your code to Heroku: `git push heroku master`
-
