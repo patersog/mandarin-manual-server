@@ -3,6 +3,7 @@
 const express = require('express');
 
 const User = require('../models/user');
+const Question = require('../models/questions');
 
 const router = express.Router();
 
@@ -84,6 +85,7 @@ router.post('/', (req, res, next) => {
 	firstname = firstname.trim();
 	lastname = lastname.trim();
 
+	let user_id;
 	return User.hashPassword(password)
 		.then(digest => {
 			const newUser = {
@@ -93,6 +95,20 @@ router.post('/', (req, res, next) => {
 				lastname
 			};
 			return User.create(newUser);
+		})
+		.then(user => {
+			user_id = user.id;
+			return Question.find();
+		})
+		.then(q_collection => {
+			return q_collection.map((q, index) => ({
+				value: q._id,
+				next: q_collection[index + 1] ? q_collection[index + 1]._id : null,
+				m: 1
+			}));
+		})
+		.then(nodelist => {
+			return User.findByIdAndUpdate({_id: user_id}, { 'questions.head' : nodelist[0].value, 'questions.list': nodelist}, { new: true });
 		})
 		.then(result => {
 			return res.status(201).location(`/api/users/${result.id}`).json(result);

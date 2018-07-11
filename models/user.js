@@ -2,21 +2,6 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-const nodeSchema = new mongoose.Schema({
-	_this: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Question'
-	},
-	next: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Question'
-	},
-	m : {
-		type: Number,
-		default: 1
-	}
-});
-
 const UserSchema = new mongoose.Schema({
 	firstname: {
 		type: String,
@@ -36,23 +21,27 @@ const UserSchema = new mongoose.Schema({
 		required: true
 	},
 	questions: {
-		current: {
+		head: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Question',
 			default: null
 		},
-		list: {
-			type: [nodeSchema]
-		}
+		list: [{
+			value: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Question'
+			},
+			next: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Question'
+			},
+			m : {
+				type: Number,
+				default: 1
+			}
+		}]
 	}
 });
-
-/**
- *  [ C , D , B,  A ]
- *
- *  [ B -> C -> D -> A ]
- *
- */
 
 UserSchema.set('toObject', {
 	transform: function(doc, ret) {
