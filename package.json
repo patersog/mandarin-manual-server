@@ -1,5 +1,5 @@
 {
-	"name": "spaced-repetition-app",
+	"name": "spaced-repetition-app-server",
 	"version": "1.0.0",
 	"description": "Backend for Spaced Repetition application",
 	"main": "index.js",
