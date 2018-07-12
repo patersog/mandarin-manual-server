@@ -1,8 +1,8 @@
 
 const express = require('express');
 
-const Questions = require('../models/questions');
 const Users = require('../models/user');
+const Questions = require('../models/questions');
 
 const router = express.Router();
 
@@ -17,13 +17,51 @@ const router = express.Router();
 // });
 
 
-router.get('/:id', (req, res, next) => {
-	const {id} = req.params;
-	Questions.findById(id)
+/** A -> B -> C -> D */
+
+//  1    1    1    1
+
+//  B -> A -> C -> D
+
+//  1    2    1    1
+
+//  A -> C -> B -> D
+
+//  2    1    2    1
+
+//  C -> B -> D -> A
+
+//  1    2    1    4
+
+
+router.get('/:username', (req, res, next) => {
+	const {username} = req.params;
+	Users.findOne({'username': username})
+		.select('questions.head')
 		.then(result => {
-			console.log('INSIDE /api/questions/:id', result);
-			console.log('Prompt: ', result.prompt);
-			res.json(result.prompt);
+			const { head } = result.questions;
+			return Questions.findById({_id: head})
+				.select('prompt');
+		})
+		.then(prompt => {
+			res.json(prompt);
+		})
+		.catch(err => {
+			next(err);
+		});
+});
+
+
+router.get('/correct/:id', (req, res, next) => {
+	const {id} = req.params;
+	const {answer} = req.body;
+	Questions.findById({_id: id})
+		.then(question => {
+			if(question.answer === answer) {
+				res.json(true);
+			} else {
+				res.json(false);
+			}
 		})
 		.catch(err => {
 			next(err);

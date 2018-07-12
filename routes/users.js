@@ -1,5 +1,4 @@
 
-
 const express = require('express');
 
 const User = require('../models/user');
@@ -118,12 +117,14 @@ router.post('/', (req, res, next) => {
 			}));
 		})
 		.then(nodelist => {
-			return User.findByIdAndUpdate({_id: user_id}, { 'questions.head' : nodelist[0].value, 'questions.list': nodelist}, { new: true });
+			return User
+				.findByIdAndUpdate({_id: user_id},
+					{ 'questions.head' : nodelist[0].value, 'questions.list': nodelist},
+					{ new: true, select: 'username'}
+				);
 		})
 		.then(result => {
-			const {username, firstname, lastname} = result;
-			const {head} = result.questions;
-			return res.status(201).location(`/api/users/${result.id}`).json({username, firstname, lastname, qid: head});
+			return res.status(201).location(`/api/users/${result.id}`).json(result);
 		})
 		.catch(err => {
 			if (err.code === 11000) {
