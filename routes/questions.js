@@ -44,6 +44,7 @@ router.get('/:username', (req, res, next) => {
 				.select('prompt');
 		})
 		.then(prompt => {
+			console.log('PROMPT', prompt);
 			res.json(prompt);
 		})
 		.catch(err => {
@@ -52,12 +53,19 @@ router.get('/:username', (req, res, next) => {
 });
 
 
-router.get('/correct/:id', (req, res, next) => {
-	const {id} = req.params;
+router.get('/correct/:username', (req, res, next) => {
+	const {username} = req.params;
 	const {answer} = req.body;
-	Questions.findById({_id: id})
-		.then(question => {
-			if(question.answer === answer) {
+	Users.findOne({'username': username})
+		.select('questions.head')
+		.then(result => {
+			const {head } = result.quesionts;
+			return Questions.findById({_id: head})
+				.select('answer');
+		})
+		.then( question => {
+			console.log(question);
+			if(answer === answer) {
 				res.json(true);
 			} else {
 				res.json(false);
