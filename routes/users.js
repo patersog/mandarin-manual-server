@@ -18,13 +18,13 @@ router.get('/', (req, res, next) => {
 		});
 });
 
-router.get('/:id', (req, res, next) => {
-	const {id} = req.params;
-	User.findById({_id: id})
-		.then(result => {
-			console.log(result);
-		});
-});
+// router.get('/:id', (req, res, next) => {
+// 	const {id} = req.params;
+// 	User.findById({_id: id})
+// 		.then(result => {
+// 			console.log(result);
+// 		});
+// });
 
 // CREATE NEW USER
 router.post('/', (req, res, next) => {
@@ -107,19 +107,23 @@ router.post('/', (req, res, next) => {
 		})
 		.then(user => {
 			user_id = user.id;
+			/**
+			 * TODO:
+			 * Find a grouping of questions based on some criteria...?
+			 */
 			return Question.find();
 		})
 		.then(q_collection => {
 			return q_collection.map((q, index) => ({
-				value: q._id,
-				next: q_collection[index + 1] ? q_collection[index + 1]._id : null,
+				qid: q._id,
+				next: index,
 				m: 1
 			}));
 		})
 		.then(nodelist => {
 			return User
 				.findByIdAndUpdate({_id: user_id},
-					{ 'questions.head' : nodelist[0].value, 'questions.list': nodelist},
+					{ 'questions.head' : nodelist[0].qid, 'questions.list': nodelist},
 					{ new: true, select: 'username'}
 				);
 		})

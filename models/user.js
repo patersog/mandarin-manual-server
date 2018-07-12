@@ -27,14 +27,11 @@ const UserSchema = new mongoose.Schema({
 			default: null
 		},
 		list: [{
-			value: {
+			qid: {
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Question'
 			},
-			next: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Question'
-			},
+			next: Number,
 			m : {
 				type: Number,
 				default: 1
