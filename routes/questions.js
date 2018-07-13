@@ -56,8 +56,7 @@ router.get('/correct/:username', (req, res, next) => {
 		});
 });
 
-
-router.get('/next/:username', (req,res, next) => {
+router.put('/next/:username', (req,res, next) => {
 	const {username} = req.params;
 	const {correct} = req.body;
 
@@ -129,12 +128,10 @@ router.get('/next/:username', (req,res, next) => {
 			 *  1    1    2    1    1
 			 *
 			 */
-
 			return user.save( function(err, updatedUser) {
 				if(err) {
 					next(err);
 				}
-				console.log(updatedUser);
 			});
 		})
 		.catch(err => {
@@ -144,6 +141,3 @@ router.get('/next/:username', (req,res, next) => {
 });
 
 module.exports = router;
-
-
-
