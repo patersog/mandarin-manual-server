@@ -80,6 +80,11 @@ router.put('/next/:username', (req,res, next) => {
 			// save it's m value to find correct placement
 			let m_position = answered.m;
 
+			//Quick Fix, not for production
+			if(m_position >= nodeList.length) {
+				m_position = nodeList.length - 1;
+			}
+
 			// find the insertion point for our 'node'
 			while(m_position  && current.next <= nodeList.length) {
 				current = nodeList[current.next];
