@@ -48,10 +48,8 @@ router.get('/correct/:username', (req, res, next) => {
 		})
 		.then( question => {
 			if(question.answer === answer.toLowerCase()) {
-				console.log(true);
 				res.json(true);
 			} else {
-				console.log(false);
 				res.json(false);
 			}
 		})
@@ -71,33 +69,39 @@ router.put('/next/:username', (req,res, next) => {
 	let nextQuestionIndex;
 
 	let user; //need reference to user for 'save'
-	console.log('TAG',correct, username);
+
 	Users.findOne({'username': username})
 		.then(result => {
 			user = result;
 			const {head, list} = user.questions;
 			nodeList = list;
-			// get the current head from our array of nodes
-			return nodeList.find((node, index) => {
-				if(node.qid === head) {
-					answeredIndex = index;
-					return true;
+			return nodeList.filter((node) => {
+				if(node.qid.toString() === head.toString()) {
+					return node;
 				}
 			});
 		})
-		.then(current => {
+		.then(node => {
 
+			// console.log('NODE', node[0]);
 			// update it's m value
+			let current = node[0];
 			answered = current;
 			nextQuestionIndex = answered.next;
 			answered.m = correct ? answered.m * 2 : 1;
 
+			//console.log('M_VALUE',typeof(answered.m));
+
 			// save it's m value to find correct placement
 			let m_position = answered.m;
+
+			console.log(m_position);
+			//console.log('NODE INSERT POSITION', m_position);
 
 			// find the insertion point for our 'node'
 			while(m_position >= 1 && current.next <= nodeList.length) {
 				current = nodeList[current.next];
+				console.log('new current', current);
 				m_position--;
 			}
 
@@ -106,7 +110,9 @@ router.put('/next/:username', (req,res, next) => {
 			user.questions.head = nodeList[nextQuestionIndex].qid;
 
 			// update 'next' pointers for insertion
+			console.log('answered.next before', answered.next);
 			answered.next = current.next;
+			console.log('answered.next after:', answered.next);
 			current.next = answeredIndex;
 
 			/**
@@ -134,7 +140,7 @@ router.put('/next/:username', (req,res, next) => {
 			 *
 			 */
 			return user.save( function(err, updatedUser) {
-				console.log('TAG',updatedUser);
+				res.json(updatedUser.head);
 				if(err) {
 					next(err);
 				}
