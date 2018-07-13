@@ -35,8 +35,10 @@ router.get('/:username', (req, res, next) => {
 });
 
 router.get('/correct/:username', (req, res, next) => {
+	console.log('WERE IN!');
+	const {answer} = req.query;
 	const {username} = req.params;
-	const {answer} = req.body;
+	console.log(username, answer);
 	Users.findOne({'username': username})
 		.select('questions.head')
 		.then(result => {
@@ -45,9 +47,11 @@ router.get('/correct/:username', (req, res, next) => {
 				.select('answer');
 		})
 		.then( question => {
-			if(question.answer === answer) {
+			if(question.answer === answer.toLowerCase()) {
+				console.log('WE DID IT!', true);
 				res.json(true);
 			} else {
+				console.log('WE DID IT!', false);
 				res.json(false);
 			}
 		})
