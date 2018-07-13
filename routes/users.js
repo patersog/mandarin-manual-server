@@ -116,7 +116,7 @@ router.post('/', (req, res, next) => {
 		.then(q_collection => {
 			return q_collection.map((q, index) => ({
 				qid: q._id,
-				next: index,
+				next: index + 1 !== q_collection.length ? index + 1 : 0,
 				m: 1
 			}));
 		})

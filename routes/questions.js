@@ -48,10 +48,10 @@ router.get('/correct/:username', (req, res, next) => {
 		})
 		.then( question => {
 			if(question.answer === answer.toLowerCase()) {
-				console.log('WE DID IT!', true);
+				console.log(true);
 				res.json(true);
 			} else {
-				console.log('WE DID IT!', false);
+				console.log(false);
 				res.json(false);
 			}
 		})
@@ -71,7 +71,7 @@ router.put('/next/:username', (req,res, next) => {
 	let nextQuestionIndex;
 
 	let user; //need reference to user for 'save'
-
+	console.log('TAG',correct, username);
 	Users.findOne({'username': username})
 		.then(result => {
 			user = result;
@@ -101,6 +101,7 @@ router.put('/next/:username', (req,res, next) => {
 				m_position--;
 			}
 
+			console.log('we be looped!');
 			// set the new head to be the next question qid
 			user.questions.head = nodeList[nextQuestionIndex].qid;
 
@@ -133,6 +134,7 @@ router.put('/next/:username', (req,res, next) => {
 			 *
 			 */
 			return user.save( function(err, updatedUser) {
+				console.log('TAG',updatedUser);
 				if(err) {
 					next(err);
 				}
