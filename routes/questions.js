@@ -77,7 +77,7 @@ router.put('/next/:username', (req,res, next) => {
 			nextQuestionIndex = answered.next;
 			answered.m = correct ? answered.m * 2 : 1;
 
-			// save it's m value to find correct placement
+			//save it's m value to find correct placement
 			let m_position = answered.m;
 
 			//Quick Fix, not for production
@@ -121,6 +121,7 @@ router.put('/next/:username', (req,res, next) => {
 			 *  1    1    2    1    1
 			 *
 			 */
+
 			return user.save( function(err, updatedUser) {
 				res.json(updatedUser.head);
 				if(err) {

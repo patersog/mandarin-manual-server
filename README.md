@@ -16,4 +16,6 @@ Whether traveling in a new land, or meeting a new friend 😉, we hope that the 
 
 [Mongoose](http://mongoosejs.com/)
 
+[Passport](http://www.passportjs.org/)
+
 [Hard Work and dedication 💗](https://www.youtube.com/watch?v=0tbLtHg5HgE)
