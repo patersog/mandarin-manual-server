@@ -1,55 +1,47 @@
 [
-    {
-        "category": "mandarin",
-        "answer": "thank you",
-        "prompt": "xièxiè (shieh-shieh)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "you’re welcome",
-        "prompt": "bù kèqì (boo kuh-chi)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "good morning",
-        "prompt": "zǎo (zhow)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "goodnight",
-        "prompt": "wǎn'ān (one-un)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "my name is…",
-        "prompt": "wǒ jiào... (wuh jeow...)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "i don't understand",
-        "prompt": "wǒ bù dǒng (wuh boo dong)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "yes",
-        "prompt": "shì (sheh)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "no",
-        "prompt": "bù shì (bu-sheh)"
-    },
-
-    {
-        "category": "mandarin",
-        "answer": "bad",
-        "prompt": "bù hǎo (boo-how)"
-    }
+  {
+    "category": "mandarin",
+    "answer": "thank you",
+    "prompt": "xièxiè (shieh-shieh)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "you’re welcome",
+    "prompt": "bù kèqì (boo kuh-chi)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "good morning",
+    "prompt": "zǎo (zhow)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "goodnight",
+    "prompt": "wǎn'ān (one-un)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "my name is…",
+    "prompt": "wǒ jiào... (wuh jeow...)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "i don't understand",
+    "prompt": "wǒ bù dǒng (wuh boo dong)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "yes",
+    "prompt": "shì (sheh)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "no",
+    "prompt": "bù shì (bu-sheh)"
+  },
+  {
+    "category": "mandarin",
+    "answer": "bad",
+    "prompt": "bù hǎo (boo-how)"
+  }
 ]

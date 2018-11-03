@@ -7,16 +7,16 @@ const Question = require('../models/questions');
 const seedQuestions = require('../db/seed/questions');
 
 mongoose.connect(DATABASE_URL)
-	.then(() => {
-		return mongoose.connection.db.dropDatabase();
-	})
-	.then(() => {
-		return Promise.all([
-			Question.insertMany(seedQuestions),
-		]);
-	})
-	.then(() => mongoose.disconnect())
-	.catch(err => {
-		console.error(`ERROR: ${err.message}`);
-		console.error(err);
-	});
+  .then(() => {
+    return mongoose.connection.db.dropDatabase();
+  })
+  .then(() => {
+    return Promise.all([
+      Question.insertMany(seedQuestions),
+    ]);
+  })
+  .then(() => mongoose.disconnect())
+  .catch(err => {
+    console.error(`ERROR: ${err.message}`);
+    console.error(err);
+  });
